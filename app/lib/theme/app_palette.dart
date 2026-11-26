@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class AppPalette {
   static const Color tealDark = Color(0xFF134E4A);
