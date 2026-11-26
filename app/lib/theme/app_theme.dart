@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// Brand text shown on the logo (Figma says EASY CARE). Change here if needed.
 const String kAppBrand = 'EASY CARE';
