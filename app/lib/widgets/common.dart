@@ -1,7 +1,8 @@
 import 'package:material_ui/material_ui.dart';
 import '../theme/app_theme.dart';
+import '../theme/app_palette.dart';
 
-/// White -> light lavender gradient background used on every screen.
+/// Soft mint gradient background used on every screen.
 class GradientScaffold extends StatelessWidget {
   const GradientScaffold({
     super.key,
@@ -40,33 +41,32 @@ class BrandLogo extends StatelessWidget {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        SizedBox(
-          width: size * 1.15,
+        Container(
+          width: size,
           height: size,
-          child: Stack(
-            children: [
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Icon(Icons.favorite_border,
-                    size: size, color: AppColors.iconGrey),
-              ),
-              Align(
-                alignment: Alignment.centerRight,
-                child: Icon(Icons.add,
-                    size: size * 0.55, color: AppColors.iconGrey),
+          decoration: const BoxDecoration(
+            color: AppPalette.teal,
+            shape: BoxShape.circle,
+            boxShadow: [
+              BoxShadow(
+                color: Color(0x330F766E),
+                blurRadius: 16,
+                offset: Offset(0, 6),
               ),
             ],
           ),
+          child: Icon(Icons.favorite_rounded,
+              size: size * 0.52, color: Colors.white),
         ),
         if (showText) ...[
-          const SizedBox(height: 4),
+          const SizedBox(height: 8),
           const Text(
             kAppBrand,
             style: TextStyle(
-              fontFamily: 'serif',
               fontSize: 20,
               fontWeight: FontWeight.w800,
-              letterSpacing: 0.5,
+              letterSpacing: 2,
+              color: AppPalette.tealDark,
             ),
           ),
         ],
@@ -80,7 +80,7 @@ class PrimaryButton extends StatelessWidget {
     super.key,
     required this.label,
     required this.onPressed,
-    this.height = 54,
+    this.height = 56,
     this.color = AppColors.navy,
     this.fontSize = 18,
   });
@@ -100,13 +100,14 @@ class PrimaryButton extends StatelessWidget {
         style: ElevatedButton.styleFrom(
           backgroundColor: color,
           foregroundColor: Colors.white,
-          elevation: 0,
+          elevation: 3,
+          shadowColor: const Color(0x4D0F766E),
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
         ),
         onPressed: onPressed,
         child: Text(label,
-            style: TextStyle(fontSize: fontSize, fontWeight: FontWeight.w600)),
+            style: TextStyle(fontSize: fontSize, fontWeight: FontWeight.w700)),
       ),
     );
   }
@@ -132,12 +133,20 @@ class AppField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    OutlineInputBorder border(Color c, double w) => OutlineInputBorder(
+          borderRadius: BorderRadius.circular(16),
+          borderSide: BorderSide(color: c, width: w),
+        );
     return TextField(
       controller: controller,
       obscureText: obscure,
       keyboardType: keyboardType,
+      cursorColor: AppColors.navy,
       decoration: InputDecoration(
         labelText: label,
+        labelStyle: const TextStyle(color: AppColors.muted),
+        floatingLabelStyle: const TextStyle(
+            color: AppColors.navy, fontWeight: FontWeight.w700),
         hintText: hint,
         hintStyle: const TextStyle(fontSize: 14, color: AppColors.muted),
         floatingLabelBehavior: FloatingLabelBehavior.always,
@@ -146,16 +155,15 @@ class AppField extends StatelessWidget {
         suffixIcon: suffix,
         contentPadding:
             const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(16),
-          borderSide: BorderSide.none,
-        ),
+        enabledBorder: border(AppColors.fieldBorder, 1),
+        border: border(AppColors.fieldBorder, 1),
+        focusedBorder: border(AppColors.navy, 1.6),
       ),
     );
   }
 }
 
-/// Drop-down styled like the Figma fields.
+/// Drop-down styled like the fields.
 class AppDropdown extends StatelessWidget {
   const AppDropdown({
     super.key,
@@ -181,6 +189,7 @@ class AppDropdown extends StatelessWidget {
       decoration: BoxDecoration(
         color: fillColor,
         borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: AppColors.fieldBorder),
       ),
       child: Row(
         children: [
@@ -193,6 +202,7 @@ class AppDropdown extends StatelessWidget {
               child: DropdownButton<String>(
                 isExpanded: true,
                 value: value,
+                iconEnabledColor: AppColors.navy,
                 hint: Text(hint,
                     style: const TextStyle(
                         fontSize: 14, color: AppColors.muted)),
@@ -212,7 +222,7 @@ class AppDropdown extends StatelessWidget {
   }
 }
 
-/// Placeholder for Figma illustrations. Replace with Image.asset(...) later.
+/// Placeholder for illustrations. Replace with Image.asset(...) later.
 class IllustrationBox extends StatelessWidget {
   const IllustrationBox({super.key, required this.icon, this.height = 200});
   final IconData icon;
@@ -224,8 +234,8 @@ class IllustrationBox extends StatelessWidget {
       width: double.infinity,
       height: height,
       decoration: BoxDecoration(
-        color: const Color(0xFFEDF0FF),
-        borderRadius: BorderRadius.circular(12),
+        color: AppColors.tint,
+        borderRadius: BorderRadius.circular(24),
       ),
       child: Icon(icon, size: 90, color: AppColors.navy),
     );
@@ -243,8 +253,8 @@ class AvatarCircle extends StatelessWidget {
       width: size,
       height: size,
       decoration: const BoxDecoration(
-          color: Color(0xFFDDE3FF), shape: BoxShape.circle),
-      child: Icon(icon, size: size * 0.6, color: AppColors.navy),
+          color: AppColors.tintDeep, shape: BoxShape.circle),
+      child: Icon(icon, size: size * 0.55, color: AppColors.navy),
     );
   }
 }
